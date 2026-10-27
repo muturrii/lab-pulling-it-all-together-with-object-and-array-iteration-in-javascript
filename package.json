@@ -40,5 +40,8 @@
   },
   "dependencies": {
     "sinon": "^7.3.2"
+  },
+  "allowScripts": {
+    "core-js@2.6.12": true
   }
 }

@@ -114,3 +114,90 @@ function gameObject() {
         },
     };
 }
+
+
+const gameInstance = gameObject()
+
+function playerStats(playerName){    
+    let playerfound 
+
+    playerfound = Object.keys(gameInstance.home.players).find(key => key === playerName)
+    if (typeof(playerfound) === "string"){
+        return gameInstance.home.players[playerName]
+    }
+    playerfound = Object.keys(gameInstance.away.players).find(key => key === playerName)
+    if (typeof(playerfound) === "string"){
+        return gameInstance.away.players[playerName]
+    }else{
+        return "Not Found"
+    }
+}
+
+function numPointsScored(playerName){
+    const playerObject = playerStats(playerName)
+
+    if (playerObject === "Not Found") {
+        return "Player not Found"
+    } else {
+        return playerObject.points
+    }
+}
+
+function shoeSize(playerName){
+    const playerObject = playerStats(playerName)
+
+    if (playerObject === "Not Found") {
+        return "Player not Found"
+    } else {
+        return playerObject.shoe
+    }    
+}
+
+function teamColors(teamName){
+    // for...in returns each key individually during each iteration
+    for (let team in gameInstance){
+        if (gameInstance[team]["teamName"] === teamName){
+            return gameInstance[team].colors
+        }
+    }
+    return "Team not Found"    
+}
+
+function teamNames(){
+    let teamNamesList = []
+
+    // Let's use object.values
+    for (let team of Object.values(gameInstance)){
+        teamNamesList.push(team.teamName)
+    }
+    if (teamNamesList.length === 0){
+        return "No teams!"
+    }else{
+        return teamNamesList
+    }
+}
+
+function playerNumbers(teamName){
+    let numberList = []
+
+    for (let team of Object.values(gameInstance)){
+        if (team.teamName === teamName){
+            for (let player of Object.values(team.players)){
+                numberList.push(player.number)
+            }
+        return numberList
+        }
+    }
+    return "Team not Found"    
+}
+
+function bigShoeRebounds(){
+    let players = Object.values(gameInstance.home.players)
+    players.concat(Object.values(gameInstance.away.players))
+    players.sort((a, b) => b.shoe - a.shoe)
+    
+    return players[0].rebounds
+}
+
+bigShoeRebounds()
+
